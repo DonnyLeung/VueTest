@@ -1,0 +1,134 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ES6</title>
+	<style>
+		div.row { margin: 10px;background: rgba(253, 252, 229, 0.62);padding: 10px;border:1px #ccc solid;border-radius: 5px; }
+		/*sup,sub { font-size: 12px;font-weight: normal; }*/
+	</style>
+</head>
+<body>
+	<a href="http://www.jianshu.com/p/ebfeb687eb70" target="_blank">原文链接</a>
+	<h1>let</h1>
+	<div class="row">
+		<p>声明变量，用法同var，区别于只在声明的代码块中有效</p>
+		<button onclick=let1()>局部变量声明</button>
+		<button onclick=let2()>for循环中变量声明</button>
+	</div>
+	<div class="row">
+		<h3>checkBox实现</h3>
+		<p>点击不同的clickBox，显示不同的i</p>
+		<div>
+			错误做法，非独立控制
+			<input type="checkbox" class="clickBox">
+			<input type="checkbox" class="clickBox">
+			<input type="checkbox" class="clickBox">
+		</div>
+		<div>
+			ES6,循环中改var改let
+			<input type="checkbox" class="clickBox1">
+			<input type="checkbox" class="clickBox1">
+			<input type="checkbox" class="clickBox1">
+		</div>
+		<div>
+			ES5,闭包，独立控制
+			<input type="checkbox" class="clickBox2">
+			<input type="checkbox" class="clickBox2">
+			<input type="checkbox" class="clickBox2">
+		</div>
+	</div>
+
+	<h1>const</h1>
+	<div class="row">
+		<p>const也用来声明变量，但是声明的是常量。一旦声明，常量的值就不能改变。<br />
+		const有一个很好的应用场景，就是当我们引用第三方库的时声明的变量，用const来声明可以避免未来不小心重命名而导致出现bug：</p>
+		<button onclick="const1()">查看</button>
+	</div>
+
+	<h1>class</h1>
+	<div class="row"></div>
+
+
+	<script>
+// let与var区别
+	function let1(){
+		console.clear();
+		// let与var区别
+		var letName_1 = "var全局变量";
+		while(true){
+			var letName_1 = "var局部变量 改变 全局变量";
+			console.log(letName_1);//更改后
+			break;
+		}
+		console.log(letName_1);//更改后
+
+		var letName_2 = "var全局变量";
+		while(true){
+			let letName_2 = "let声明局部变量 var全局变量不变";
+			console.log(letName_2);//letName不变
+			break;
+		}
+		console.log(letName_2);
+	}
+
+	function let2(){
+		console.clear();
+
+		var a = [];
+			for (var i = 0; i < 10; i++) {
+				a[i] = function () {
+					console.log("var 循环结果：" + i);
+				};
+			}
+		a[6](); // 10
+
+		for(let i=0; i<10; i++){
+			a[i]= function(){
+				console.log("let 循环结果：" + i )
+			}
+		}
+		a[6]();
+
+	}
+
+// checkBox 实现独立控制
+	// 错误做法，非独立控制
+	var clickBoxs = document.querySelectorAll('.clickBox')
+	for (var i = 0; i < clickBoxs.length; i++){
+  		clickBoxs[i].onclick = function(){
+    		console.log(i)
+   		}
+	}
+	// 循环中改var改let
+	var clickBoxs = document.querySelectorAll('.clickBox1')
+	for (let i = 0; i < clickBoxs.length; i++){
+  		clickBoxs[i].onclick = function(){
+    		console.log(i)
+   		}
+	}
+	// 闭包，独立控制
+	function iteratorFactory(i){
+    	var onclick = function(e){
+        	console.log(i)
+    	}
+    	return onclick;
+	}
+	var clickBoxs = document.querySelectorAll('.clickBox2')
+		for (var i = 0; i < clickBoxs.length; i++){
+    	clickBoxs[i].onclick = iteratorFactory(i)
+	}
+
+	function const1(){
+		console.clear();
+		const PI = Math.PI;
+		console.log("第一次定义为Math.PI "+PI);
+		PI = 23;
+		console.log("第二次定义为23 "+PI);
+
+	}
+
+// calss
+	</script>
+</body>
+</html>

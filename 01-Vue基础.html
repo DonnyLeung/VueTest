@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue基础</title>
+    <!-- <style>
+        .box { margin: 10px; }
+    </style> -->
+</head>
+<body>
+<!-- test 1 -->
+<div id="app">
+  {{ message }}
+</div>
+
+<!-- test 2 -->
+<div id="app-2">
+  <span v-bind:title="message">
+    Hover your mouse over me for a few seconds to see my dynamically bound title!
+  </span>
+</div>
+
+<!-- test 3 -->
+<div id="app-3">
+  <p v-if="seen">通过判断决定是否显示，现值为true</p>
+</div>
+
+<!-- test 4 -->
+<div id="app-4">
+  <ol>
+    <li v-for="todo in todos">
+      {{ todo.text }}
+    </li>
+  </ol>
+</div>
+
+<!-- test 5 -->
+<div id="app-5">
+  <p>{{ message }}</p>
+  <button v-on:click="reverseMessage">Reverse Message</button>
+</div>
+
+<!-- text 6 -->
+<div id="app-6">
+  <p>{{ message }}</p>
+  <input v-model="message">
+</div>
+
+<!-- test 7 -->
+<div id="app-7">
+  <ol>
+    <!-- Now we provide each todo-item with the todo object    -->
+    <!-- it's representing, so that its content can be dynamic -->
+    <todo-item v-for="item in groceryList" v-bind:todo="item"></todo-item>
+  </ol>
+</div>
+
+<!-- vue.js -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script>
+    // 与DOM绑定，可用 app.message = 'some new message'修改DOM
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!'
+        }
+    })
+
+    // message绑定v-bind(vue定义属性)：title,使title绑定message数据,可用app2.message = 'some new message'修改title
+    var app2 = new Vue({
+        el:'#app-2',
+        data:{
+            message:'You loaded this page on ' + new Date()
+        }
+    })
+
+    // app3.seen = false
+    var app3 = new Vue({
+        el:'#app-3',
+        data:{
+            seen:true
+        }
+    })
+
+    // app4.todos.push({ text: 'New item' })
+    var app4 = new Vue({
+        el: '#app-4',
+        data: {
+            todos: [
+                { text: '通过for循环' },
+                { text: '建立' },
+                { text: 'DOM' }
+            ]
+        }
+    })
+
+    // 
+    var app5 = new Vue({
+        el: '#app-5',
+        data: {
+            message:'hello Vue.js!'
+        },
+        methods: {
+            reverseMessage: function(){
+                this.message = this.message.split('').reverse().join('')
+            }
+        }
+    })
+
+    // 
+    var app6 = new Vue({
+        el: '#app-6',
+        data:{ 
+            message:"Hellow Vue!"
+        }
+    })
+
+    // 
+    Vue.component('todo-item', {
+        props: ['todo'],
+        template: '<li>{{ todo.text }}</li>'
+    })
+    var app7 = new Vue({
+        el: '#app-7',
+        data: {
+            groceryList: [
+                { text: 'Vegetables' },
+                { text: 'Cheese' },
+                { text: 'Whatever else humans are supposed to eat' }
+            ]
+        }
+    })
+    </script>
+</body>
+</html>
